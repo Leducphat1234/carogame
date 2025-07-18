@@ -21,6 +21,11 @@ a {
     color: inherit;
     text-decoration: none;
 }
+#menu > a {
+    margin-right: 1vw;
+    margin-left: 1vw;
+    margin-top: 0.4vw;
+}
 .btn {
     display: inline-block;
     text-align: center;
@@ -42,26 +47,41 @@ h1 {
 h1.name {
     top: 15%;
 }
+h2.name {
+    position:absolute;
+    top: 27%;
+}
 b {
     font-size: 200%;
 }
-.menu {
-    position: relative;
+#menu {
+    position: fixed;
     display: flex;
+    left: 0;
+    top: 0;
     width: 100%;
-    height: 10vh;
-    overflow-x: scroll;
-    background-color: cadetblue;
+    height: 11vh;
+    background-color: rgb(243, 237, 221);
+    border: 2px solid;
 }
 #cover {
     position: absolute;
     display: flex;
     width: 70vw;
-    height: 70vh;
-    top: 50%;
+    height: 80vh;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     justify-content: center;
     align-items: center;
     background-color: burlywood;
+}
+img.logo {
+    width: 10vh;
+}
+#board {
+    display: grid;
+    grid-template-columns: repeat(15, 40px);
+    grid-template-rows: repeat(15, 40px);
+    
 }
