@@ -1,8 +1,3 @@
-body {
-    justify-items: center;
-    /* background-image: ; */
-    font-size: 100%;
-}
 #container {
     position: absolute;
     top: 60%;
@@ -16,14 +11,17 @@ body {
     /* width: fit-content; */
     /* padding: 20%; */
     /* margin: 0; */
-    border: 2px groove;
+    border: 5px outset;
     border-radius: 10%;
     background-color: rgb(255, 228, 196);
     margin: 20px;
+    transform: translate(0, 60%);
 }
-.btn {
+a {
     color: inherit;
     text-decoration: none;
+}
+.btn {
     display: inline-block;
     text-align: center;
     padding: 20px;
@@ -33,20 +31,37 @@ body {
 }
 .mode:hover {
     background-color: rgba(255, 228, 196, 0.6);
+    border: 5px inset;
 }
 h1 {
     font-size: 400%;
     position: absolute;
+    transform: translate(0, -50%);
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 h1.name {
     top: 15%;
 }
-.turnHeader {
-    background-color: rgba(255, 228, 196, 0.6);
+b {
     font-size: 200%;
 }
 .menu {
-    display: block;
+    position: relative;
+    display: flex;
     width: 100%;
+    height: 10vh;
+    overflow-x: scroll;
+    background-color: cadetblue;
+}
+#cover {
+    position: absolute;
+    display: flex;
+    width: 70vw;
+    height: 70vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    background-color: burlywood;
 }
