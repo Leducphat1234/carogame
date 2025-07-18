@@ -47,7 +47,7 @@ board.addEventListener("click", (e) => {
             return true
         }
         // check column
-        let top = index - left, bottom = index + sizex*(sizey - left/sizex);
+        let top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
         max_cnt = 0; cnt = 0;
         for (let i = Math.max(top, index-(winning-1)*sizex); i <= Math.min(bottom, index+(winning-1)*sizex); i+=sizex) {
             if (cells[i].querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
@@ -62,11 +62,16 @@ board.addEventListener("click", (e) => {
             return true
         }
         // check diagonal
-        let length = Math.floor(index/sizex);
-        let top_left = index - length - sizex*length,
-        top_right = index + length - sizex*length,
-        bottom_left = index - length + sizex*length,
-        bottom_right = index + length + sizex*length;
+        let lentop = Math.floor(index/sizex), lenleft = index-left,
+            lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
+        let lentopleft = Math.min(lentop, lenleft),
+            lentopright = Math.min(lentop, lenright),
+            lenbottomleft = Math.min(lenbottom, lenleft),
+            lenbottomright = Math.min(lenbottom, lenright);
+        let top_left = index - lentopleft - sizex*lentopleft,
+            top_right = index + lentopright - sizex*lentopright,
+            bottom_left = index - lenbottomleft + sizex*lenbottomleft,
+            bottom_right = index + lenbottomright + sizex*lenbottomright;
         for (let i = Math.max(top_left, index-winning-sizex*winning); i <= Math.min(bottom_right, index+winning+sizex*winning); i+=sizex+1) {
             if (cells[i].querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
                 cnt++;
@@ -80,6 +85,7 @@ board.addEventListener("click", (e) => {
             return true
         }
         for (let i = Math.max(top_right, index+winning-sizex*winning); i <= Math.min(bottom_left, index-winning+sizex*winning); i+=sizex-1) {
+            console.log(i, cells[i].querySelector("img"), curimg, bottom_left);
             if (cells[i].querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
                 cnt++;
                 max_cnt = Math.max(max_cnt, cnt);
