@@ -1,17 +1,22 @@
 export const menu = document.getElementById("menu");
-export let gameOver = false;
 export const turnHeader = document.getElementsByClassName("turnHeader");
 export const board = document.getElementById("board");
 export const showPlayerTurn = document.getElementById("playerturn");
 export let winning = 5;
-export let sizex = 35, sizey = 35;
+export let sizex = 25, sizey = 25;
 export let cells = document.querySelectorAll('.cell');
+export let cntmove = 0;
+let gameOver = false;
 let turn = "x";
+let isFullBoard = false;
+
 export function resetGame() {
     setGameOver(false);
     board.innerHTML = "";
+    isFullBoard = false;
+    cntmove = 0;
     turn = "x";
-    showPlayerTurn.src = "/img/X.png";
+    showPlayerTurn.src = "img/X.png";
     board.style.gridTemplateColumns = `repeat(${sizex}, 40px)`;
     board.style.gridTemplateRows = `repeat(${sizey}, 40px)`;
     for (let i = 0; i < sizex*sizey; i++) {
@@ -26,7 +31,9 @@ export function resetGame() {
 export function isGameOver() {
     return gameOver;
 }
-
+export function checkFullBoard() {
+    return isFullBoard;
+}
 export function setGameOver(status) {
     gameOver = status;
 }
@@ -37,6 +44,14 @@ export function checkPlayer(who) {
     return turn === who;
 }
 export function checkWin(curcell) {
+    cntmove++;
+    if (cntmove >= sizex*sizey) {
+        showPlayerTurn.style.display = "none";
+        turnHeader[0].innerHTML = "Hòa";
+        isFullBoard = true;
+        setGameOver(true);
+        return false;
+    }
     // let x_axis = parseInt(curcell.dataset.index % sizex);
     // let y_axis = parseInt(curcell.dataset.index / sizex);
     const curimg = curcell.querySelector("img");
@@ -45,7 +60,7 @@ export function checkWin(curcell) {
     // check row
     let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
     for (let i = Math.max(left, index-winning+1); i <= Math.min(right, index+winning-1); i++) {
-        if (cells[i].querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
+        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
         }
@@ -53,14 +68,14 @@ export function checkWin(curcell) {
             cnt = 0;
         }
     }
-    if (max_cnt >= 5) {
+    if (max_cnt >= winning) {
         return true
     }
     // check column
     let top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
     max_cnt = 0; cnt = 0;
     for (let i = Math.max(top, index-(winning-1)*sizex); i <= Math.min(bottom, index+(winning-1)*sizex); i+=sizex) {
-        if (cells[i].querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
+        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
         }
@@ -68,7 +83,7 @@ export function checkWin(curcell) {
             cnt = 0;
         }
     }
-    if (max_cnt >= 5) {
+    if (max_cnt >= winning) {
         return true
     }
     // check diagonal
@@ -83,7 +98,7 @@ export function checkWin(curcell) {
         bottom_left = index - lenbottomleft + sizex*lenbottomleft,
         bottom_right = index + lenbottomright + sizex*lenbottomright;
     for (let i = Math.max(top_left, index-winning-sizex*winning); i <= Math.min(bottom_right, index+winning+sizex*winning); i+=sizex+1) {
-        if (cells[i].querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
+        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
         }
@@ -91,12 +106,12 @@ export function checkWin(curcell) {
             cnt = 0;
         }
     }
-    if (max_cnt >= 5) {
+    if (max_cnt >= winning) {
         return true
     }
     for (let i = Math.max(top_right, index+winning-sizex*winning); i <= Math.min(bottom_left, index-winning+sizex*winning); i+=sizex-1) {
-        console.log(i, cells[i].querySelector("img"), curimg, bottom_left);
-        if (cells[i].querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
+        // console.log(i, cells[i].querySelector("img"), curimg, bottom_left);
+        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
         }
@@ -104,7 +119,7 @@ export function checkWin(curcell) {
             cnt = 0;
         }
     }
-    if (max_cnt >= 5) {
+    if (max_cnt >= winning) {
         return true
     }
     return false;

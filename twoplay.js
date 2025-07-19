@@ -46,4 +46,4 @@ board.addEventListener("click", (e) => {
         }
         
     }
-})
+});

@@ -95,6 +95,7 @@ img.logo {
     position: absolute;
     top: 0;
     left: 0;
+    cursor:not-allowed;
 }
 .replay {
     background-color: brown;
@@ -102,4 +103,41 @@ img.logo {
     padding-left: 2%;
     padding-right: 2%;
     font-size: 120%
+}
+.replay:hover {
+    background-color: rgba(165, 42, 42, 0.643);
+    cursor: pointer;
+}
+.replay:active {
+    background-color: rgba(199, 121, 19, 0.643)
+}
+#playerturn {
+    display: initial;
+}
+.turnHeader {
+    margin-left: 2%;
+}
+.choice {
+    border: 2px outset;
+    position: relative;
+}
+.choice:hover {
+    border: 2px inset;
+}
+.choice > img {
+    top: 0;
+    left: 0;
+}
+.choice > img.imgplayer {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.choice:active {
+    background-color: rgba(255, 228, 196, 0.6);
+}
+.choice > img.chosen {
+    position: absolute;
+    width:100%;
+    height:100%;
 }

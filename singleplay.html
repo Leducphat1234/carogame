@@ -12,8 +12,20 @@
         <a href="index.html">
             <img class="logo" src="/img/icon.png" alt="Caro logo" title="Trang chủ">
         </a>
-        <b class="turnHeader">Đến lượt:&nbsp</b><img src="img/X.png" alt="XO" class="imgplayer" id="playerturn">
+        <b class="turnHeader">Đến lượt:</b><img src="img/X.png" alt="XO" class="imgplayer" id="playerturn">
+        <button class="replay" onclick="resetGame()">Chơi lại</button>
+        <b class="turnHeader">Bạn là: </b>
+        <div class="choice">
+            <img src="img/X.png" alt="X" class="imgplayer" id="X" title="X đi trước">
+            <img src="img/underscore.png" alt="chosen" class="chosen">
+        </div>
+        <div class=choice>
+            <img src="img/O.png" alt="O" class="imgplayer" id="O" title="O đi sau">
+            <img src="img/underscore.png" alt="chosen" class="chosen">
+        </div>
         <!-- <b class="time">Thời gian:&nbsp</b> -->
     </div>
+    <div id="board"></div>
+    <script type="module" src="singleplay.js"></script>
 </body>
 </html>
