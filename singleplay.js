@@ -2,9 +2,23 @@ import {isGameOver, setGameOver, turnHeader,
     board, showPlayerTurn, winning, sizex, sizey,
     cells, resetGame, menu,
     switchPlayer, checkFullBoard,
-    checkPlayer, checkWin
+    checkPlayer, checkWin,
+    centerindex,
+    cntmove,
+    isFullBoard,
+    turn
 } from "./scripts.js";
 
+
+// window.addEventListener("load", () => {
+//     const centercell = document.querySelector(`.cell[data-index='${centerindex}']`); // center cell
+
+//     const rect = centercell.getBoundingClientRect();
+//     const gridRect = board.getBoundingClientRect();
+
+//     board.scrollLeft = centercell.offsetLeft - board.clientWidth / 2 + centercell.clientWidth / 2;
+//     board.scrollTop = centercell.offsetTop - board.clientHeight / 2 + centercell.clientHeight / 2;
+// });
 window.resetGame = resetGame;
 resetGame();
 const chosen = document.getElementsByClassName("chosen");
@@ -103,15 +117,18 @@ function check3(curcell) {
         return true
     }
 }
-async function botMove() {
+async function botMove(firstime=false) {
     isBotThinking = true;
     showPlayerTurn.src = bot==="x"? "img/X.png": "img/O.png";
     const img = document.createElement("img");
     img.src = bot==="x"? "img/X.png": "img/O.png";
     let finalmove;
-    // do {
-    //     finalmove = randrange(0, sizex*sizey-1);
-    // } while (cells[finalmove]?.querySelector("img"));
+    /////////// edit later
+    do {
+        finalmove = randrange(0, sizex*sizey-1);
+    } while (cells[finalmove]?.querySelector("img"));
+    ///////////
+    if (firstime) finalmove = centerindex;
     await sleep(1000);
     cells[finalmove].appendChild(img);
     showPlayerTurn.src = bot==="x"? "img/O.png": "img/X.png"
@@ -127,7 +144,10 @@ O_img.addEventListener("click", () => {
     bot = "x";
     resetGame();
     displayUnderscore("o");
-    botMove();
+    botMove(true);
+});
+document.getElementsByClassName("replay")[0].addEventListener("click", () => {
+    botMove(true);
 });
 
 board.addEventListener("click", async (e) => {

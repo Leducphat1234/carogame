@@ -72,6 +72,7 @@ img.logo {
     top: 11vh;
     position: relative;
     display: grid;
+    overflow: auto;
 }
 #cover {
     position: absolute;

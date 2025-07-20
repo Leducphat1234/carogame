@@ -3,12 +3,14 @@ export const turnHeader = document.getElementsByClassName("turnHeader");
 export const board = document.getElementById("board");
 export const showPlayerTurn = document.getElementById("playerturn");
 export let winning = 5;
-export let sizex = 25, sizey = 25;
+export let sizex = 35, sizey = 25;
 export let cells = document.querySelectorAll('.cell');
 export let cntmove = 0;
+export let centerindex = Math.floor(sizey / 2) * sizex + Math.floor(sizex / 2);
 let gameOver = false;
-let turn = "x";
-let isFullBoard = false;
+export let turn = "x";
+export let isFullBoard = false;
+
 
 export function resetGame() {
     setGameOver(false);
