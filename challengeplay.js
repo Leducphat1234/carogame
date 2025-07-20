@@ -1,5 +1,5 @@
 import {isGameOver, setGameOver, turnHeader,
-    board, showPlayerTurn, winning, sizex, sizey,
+    board, showPlayerTurn, sizex, sizey,
     cells, resetGame, menu,
     switchPlayer,
     checkPlayer, checkWin

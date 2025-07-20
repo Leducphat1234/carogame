@@ -1,5 +1,5 @@
 import {isGameOver, setGameOver, turnHeader,
-    board, showPlayerTurn, winning, sizex, sizey,
+    board, showPlayerTurn, sizex, sizey,
     cells, resetGame, menu,
     switchPlayer, checkFullBoard,
     checkPlayer, checkWin,
@@ -40,81 +40,44 @@ function displayUnderscore(cur) {
     }
 }
 displayUnderscore("x");
-function randrange(a, b) {
-    return Math.floor(Math.random() * (b-a+1))+a;
+function randMove(moves) {
+    const entries = Array.from(moves.entries());
+    const totalWeight = entries.reduce((sum, [_, weight]) => sum + weight, 0);
+    const r = Math.random() * totalWeight;
+    let cumulative = 0;
+    for (const [value, weight] of entries) {
+        cumulative += weight;
+        if (r < cumulative) {
+            possibleMoves.set(value, 0);
+            return value;
+        }
+    }
+}
+const possibleMoves = new Map();
+for (let i = 0; i < sizex*sizey; i++) {
+    possibleMoves.set(i, 0);
 }
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-function check3(curcell) {
-    // let x_axis = parseInt(curcell.dataset.index % sizex);
-    // let y_axis = parseInt(curcell.dataset.index / sizex);
-    const curimg = curcell.querySelector("img");
-    const index = parseInt(curcell.dataset.index);
-    let cnt = 0, max_cnt = 0;
-    // check row
-    let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
-    for (let i = Math.max(left, index-3+1); i <= Math.min(right, index+3-1); i++) {
-        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
-            cnt++;
-            max_cnt = Math.max(max_cnt, cnt);
+function genPossibleMoves(playercell) {
+    const index = parseInt(playercell.dataset.index);
+    possibleMoves.set(index, 0);
+    const deviation = [
+        [0, 1], [0, -1], [-1, -1], [-1, 0], [-1, 1],
+        [1, -1], [1, 0], [1, 1]
+    ];
+    // console.log("index", index);
+    for (let d of deviation) {
+        let around = index + d[0]+d[1]*sizex
+        // console.log(around);
+        if (around < 0 || around > sizex*sizey) continue;
+        if (cells[around].querySelector("img")) {
+            possibleMoves.set(around, 0);
         }
         else {
-            cnt = 0;
+            possibleMoves.set(around, 1);
         }
-    }
-    if (max_cnt >= 3) {
-        return true
-    }
-    // check column
-    let top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
-    max_cnt = 0; cnt = 0;
-    for (let i = Math.max(top, index-(3-1)*sizex); i <= Math.min(bottom, index+(3-1)*sizex); i+=sizex) {
-        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
-            cnt++;
-            max_cnt = Math.max(max_cnt, cnt);
-        }
-        else {
-            cnt = 0;
-        }
-    }
-    if (max_cnt >= 3) {
-        return true
-    }
-    // check diagonal
-    let lentop = Math.floor(index/sizex), lenleft = index-left,
-        lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
-    let lentopleft = Math.min(lentop, lenleft),
-        lentopright = Math.min(lentop, lenright),
-        lenbottomleft = Math.min(lenbottom, lenleft),
-        lenbottomright = Math.min(lenbottom, lenright);
-    let top_left = index - lentopleft - sizex*lentopleft,
-        top_right = index + lentopright - sizex*lentopright,
-        bottom_left = index - lenbottomleft + sizex*lenbottomleft,
-        bottom_right = index + lenbottomright + sizex*lenbottomright;
-    for (let i = Math.max(top_left, index-3-sizex*3); i <= Math.min(bottom_right, index+3+sizex*3); i+=sizex+1) {
-        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
-            cnt++;
-            max_cnt = Math.max(max_cnt, cnt);
-        }
-        else {
-            cnt = 0;
-        }
-    }
-    if (max_cnt >= 3) {
-        return true
-    }
-    for (let i = Math.max(top_right, index+3-sizex*3); i <= Math.min(bottom_left, index-3+sizex*3); i+=sizex-1) {
-        if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
-            cnt++;
-            max_cnt = Math.max(max_cnt, cnt);
-        }
-        else {
-            cnt = 0;
-        }
-    }
-    if (max_cnt >= 3) {
-        return true
     }
 }
 async function botMove(firstime=false) {
@@ -124,12 +87,11 @@ async function botMove(firstime=false) {
     img.src = bot==="x"? "img/X.png": "img/O.png";
     let finalmove;
     /////////// edit later
-    do {
-        finalmove = randrange(0, sizex*sizey-1);
-    } while (cells[finalmove]?.querySelector("img"));
+    finalmove = randMove(possibleMoves);
     ///////////
     if (firstime) finalmove = centerindex;
-    await sleep(1000);
+    console.log("bot move", finalmove);
+    await sleep(500);
     cells[finalmove].appendChild(img);
     showPlayerTurn.src = bot==="x"? "img/O.png": "img/X.png"
     isBotThinking = false;
@@ -138,16 +100,19 @@ async function botMove(firstime=false) {
 X_img.addEventListener("click", () => {
     bot = "o";
     resetGame();
+    possibleMoves.clear();
     displayUnderscore("x");
 });
 O_img.addEventListener("click", () => {
     bot = "x";
     resetGame();
+    possibleMoves.clear();
     displayUnderscore("o");
     botMove(true);
 });
 document.getElementsByClassName("replay")[0].addEventListener("click", () => {
-    botMove(true);
+    if (bot==="x") botMove(true);
+    possibleMoves.clear();
 });
 
 board.addEventListener("click", async (e) => {
@@ -164,11 +129,13 @@ board.addEventListener("click", async (e) => {
             return;
         }
         if (checkFullBoard()) return;
+        genPossibleMoves(e.target);
         let move = await botMove();
         if (checkWin(cells[move])) {
             setGameOver(true);
             turnHeader[0].innerHTML = "Bạn Thua";
             return;
         }
+        if (checkFullBoard()) return;
     }
 });
