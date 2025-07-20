@@ -27,7 +27,7 @@ export function resetGame() {
         cell.dataset.index = i;
         board.appendChild(cell);
     }
-    turnHeader[0].innerHTML = "Đến lượt:&nbsp";
+    turnHeader[0].innerHTML = "Đến lượt:";
     cells = document.querySelectorAll('.cell');
 }
 export function isGameOver() {
@@ -45,6 +45,13 @@ export function switchPlayer() {
 export function checkPlayer(who) {
     return turn === who;
 }
+
+function mark(arr) {
+    for (let i of arr) {
+        cells[i].style.backgroundColor = "orange";
+    }
+}
+
 export function checkWin(curcell) {
     cntmove++;
     if (cntmove >= sizex*sizey) {
@@ -60,35 +67,42 @@ export function checkWin(curcell) {
     const index = parseInt(curcell.dataset.index);
     let cnt = 0, max_cnt = 0;
     // check row
+    let candidates = [];
     let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
     for (let i = Math.max(left, index-winning_dis+1); i <= Math.min(right, index+winning_dis-1); i++) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
+            candidates.push(i);
         }
         else {
             cnt = 0;
         }
     }
     if (max_cnt >= winning_dis) {
-        return true
+        mark(candidates);
+        return true;
     }
     // check column
+    candidates = [];
     let top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
     max_cnt = 0; cnt = 0;
     for (let i = Math.max(top, index-(winning_dis-1)*sizex); i <= Math.min(bottom, index+(winning_dis-1)*sizex); i+=sizex) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
+            candidates.push(i);
         }
         else {
             cnt = 0;
         }
     }
     if (max_cnt >= winning_dis) {
-        return true
+        mark(candidates);
+        return true;
     }
     // check diagonal
+    candidates = [];
     let lentop = Math.floor(index/sizex), lenleft = index-left,
         lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
     let lentopleft = Math.min(lentop, lenleft),
@@ -103,26 +117,31 @@ export function checkWin(curcell) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
+            candidates.push(i);
         }
         else {
             cnt = 0;
         }
     }
     if (max_cnt >= winning_dis) {
-        return true
+        mark(candidates);
+        return true;
     }
+    candidates = [];
     for (let i = Math.max(top_right, index+winning_dis-sizex*winning_dis); i <= Math.min(bottom_left, index-winning_dis+sizex*winning_dis); i+=sizex-1) {
         // console.log(i, cells[i].querySelector("img"), curimg, bottom_left);
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
             max_cnt = Math.max(max_cnt, cnt);
+            candidates.push(i);
         }
         else {
             cnt = 0;
         }
     }
     if (max_cnt >= winning_dis) {
-        return true
+        mark(candidates);
+        return true;
     }
     return false;
 }
