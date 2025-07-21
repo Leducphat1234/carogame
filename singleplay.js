@@ -81,6 +81,7 @@ function checkThreat(curcell, opponent=0) {
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
+    if (cells[p1]?.querySelector("img").src !== curimg.src && cells[p2]?.querySelector("img").src !== curimg.src) blocked = true;
     if (max_cnt >= 3 && !blocked) {
         console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
         initMp();
@@ -119,6 +120,7 @@ function checkThreat(curcell, opponent=0) {
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
+    if (cells[p1]?.querySelector("img").src !== curimg.src && cells[p2]?.querySelector("img").src !== curimg.src) blocked = true;
     if (max_cnt >= 3 && !blocked) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
@@ -166,6 +168,7 @@ function checkThreat(curcell, opponent=0) {
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
+    if (cells[p1]?.querySelector("img").src !== curimg.src && cells[p2]?.querySelector("img").src !== curimg.src) blocked = true;
     if (max_cnt >= 3 && !blocked) {
         console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
@@ -203,6 +206,7 @@ function checkThreat(curcell, opponent=0) {
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
+    if (cells[p1]?.querySelector("img").src !== curimg.src && cells[p2]?.querySelector("img").src !== curimg.src) blocked = true;
     if (max_cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
