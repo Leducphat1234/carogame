@@ -268,7 +268,6 @@ async function botMove(firstime=false) {
     console.log("bot move", finalmove);
     await sleep(100);
     cells[finalmove].appendChild(img);
-    moveSound.play();
     showPlayerTurn.src = bot==="x"? "./img/O.png": "./img/X.png"
     isBotThinking = false;
     return finalmove;
@@ -312,6 +311,7 @@ board.addEventListener("click", async (e) => {
         checkThreat(e.target);
         checkThreat(cells[move]);
         move = await botMove();
+        moveSound.play();
         if (checkWin(cells[move])) {
             setGameOver(true);
             turnHeader[0].innerHTML = "Bạn Thua";
