@@ -46,6 +46,7 @@ h1 {
 }
 h1.name {
     top: 15%;
+    white-space: nowrap;
 }
 h2.name {
     position:absolute;
