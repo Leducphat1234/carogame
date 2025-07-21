@@ -66,10 +66,10 @@ function checkThreat(curcell, opponent=0) {
         }
         else {
             if (cells[i]?.querySelector("img")) {
-                if (i != p2) blocked=true;
+                if (p2 && i != p2 && cnt < 4) blocked=true;
                 continue;
             }
-            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined && !blocked) p3=i;
         }
     }
     if (cnt >= 3 && !blocked) {
@@ -96,10 +96,10 @@ function checkThreat(curcell, opponent=0) {
         }
         else {
             if (cells[i]?.querySelector("img")) {
-                if (i != p2) blocked=true;
+                if (p2 && i != p2 && cnt < 4) blocked=true;
                 continue;
             }
-            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined && !blocked) p3=i;
         }
     }
     if (cnt >= 3 && !blocked) {
@@ -135,10 +135,10 @@ function checkThreat(curcell, opponent=0) {
         }
         else {
             if (cells[i]?.querySelector("img")) {
-                if (i != p2) blocked=true;
+                if (p2 && i != p2 && cnt < 4) blocked=true;
                 continue;
             }
-            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined && !blocked) p3=i;
         }
     }
     if (cnt >= 3 && !blocked) {
@@ -164,18 +164,14 @@ function checkThreat(curcell, opponent=0) {
         }
         else {
             if (cells[i]?.querySelector("img")) {
-                if (i != p2) blocked=true;
+                if (p2 && i != p2 && cnt < 4) blocked=true;
                 continue;
             }
-            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined && !blocked) p3=i;
         }
     }
     if (cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
-        // for (let idx of ) {
-        //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
-        //     else possibleMoves.set(idx, 10);
-        // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 10+(cnt-3)*1000 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -229,9 +225,9 @@ async function botMove(firstime=false) {
     const img = document.createElement("img");
     img.src = bot==="x"? "./img/X.png": "./img/O.png";
     let finalmove;
-    /////////// edit later
+
     finalmove = randMove(possibleMoves);
-    ///////////
+
     if (firstime) finalmove = centerindex;
     console.log("bot move", finalmove);
     await sleep(1000);
@@ -284,6 +280,6 @@ board.addEventListener("click", async (e) => {
         }
         if (checkFullBoard()) return;
         genPossibleMoves(cells[move]);
-        console.log(possibleMoves);
+        // console.log(possibleMoves);
     }
 });
