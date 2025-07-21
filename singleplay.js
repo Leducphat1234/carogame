@@ -78,12 +78,12 @@ function checkThreat(curcell, opponent=0) {
     if (cnt >= 3 && !blocked) {
         console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*100 - (half_block? 100: 0));
+            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
         }
     }
     // check column
@@ -110,12 +110,12 @@ function checkThreat(curcell, opponent=0) {
     if (cnt >= 3 && !blocked) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*100 - (half_block? 100: 0));
+            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
         }
     }
     // check diagonal
@@ -151,12 +151,12 @@ function checkThreat(curcell, opponent=0) {
     if (cnt >= 3 && !blocked) {
         console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*100 - (half_block? 100: 0));
+            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
         }
     }
 
@@ -182,12 +182,12 @@ function checkThreat(curcell, opponent=0) {
     if (cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*100 - (half_block? 100: 0));
+        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*100 - (half_block? 100: 0));
+            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
         }
     }
     return [p1, p2, p3];
