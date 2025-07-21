@@ -224,7 +224,7 @@ async function botMove(firstime=false) {
     isBotThinking = true;
     showPlayerTurn.src = bot==="x"? "img/X.png": "img/O.png";
     const img = document.createElement("img");
-    img.src = bot==="x"? "img/X.png": "img/O.png";
+    img.src = bot==="x"? "./img/X.png": "./img/O.png";
     let finalmove;
     /////////// edit later
     finalmove = randMove(possibleMoves);
@@ -233,7 +233,7 @@ async function botMove(firstime=false) {
     console.log("bot move", finalmove);
     await sleep(500);
     cells[finalmove].appendChild(img);
-    showPlayerTurn.src = bot==="x"? "img/O.png": "img/X.png"
+    showPlayerTurn.src = bot==="x"? "./img/O.png": "./img/X.png"
     isBotThinking = false;
     return finalmove;
 }
@@ -261,7 +261,7 @@ board.addEventListener("click", async (e) => {
     if (e.target.classList.contains("cell")) {
         if (e.target.querySelector("img")) return;
         const img = document.createElement("img");
-        img.src = bot==="x"? "img/O.png": "img/X.png";
+        img.src = bot==="x"? "./img/O.png": "./img/X.png";
         e.target.appendChild(img);
         if (checkWin(e.target)) {
             setGameOver(true);
