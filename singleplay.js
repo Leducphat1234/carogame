@@ -71,6 +71,7 @@ function checkThreat(curcell, opponent=0) {
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
+                cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
@@ -106,6 +107,7 @@ function checkThreat(curcell, opponent=0) {
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
+                cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
@@ -150,6 +152,7 @@ function checkThreat(curcell, opponent=0) {
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
+                cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
@@ -184,6 +187,7 @@ function checkThreat(curcell, opponent=0) {
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
+                cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
