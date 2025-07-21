@@ -27,6 +27,7 @@ let bot = "o";
 const O_img = document.getElementById("O");
 const X_img = document.getElementById("X");
 let isBotThinking = false;
+let isExistLine = false;
 function displayUnderscore(cur) {
     if (cur === "x") {
         chosen[0].style.display = "initial";
@@ -77,6 +78,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
+        isExistLine = true;
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -109,6 +111,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
+        isExistLine = true;
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -150,6 +153,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
+        isExistLine = true;
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -181,6 +185,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
+        isExistLine = true;
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -280,7 +285,7 @@ board.addEventListener("click", async (e) => {
             return;
         }
         if (checkFullBoard()) return;
-        genPossibleMoves(e.target);
+        if (!isExistLine) genPossibleMoves(e.target);
         checkThreat(e.target);
         checkThreat(cells[move]);
         move = await botMove();
