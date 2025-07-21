@@ -53,9 +53,9 @@ function checkThreat(curcell, opponent=0) {
     if (!curimg) return;
     const index = parseInt(curcell.dataset.index);
     let cnt = 0;
-    const distance = 5;
-    le
+    const distance = 4;
     let p1, p2, p3 = undefined;
+    let blocked = false;
     // check row
     let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
     for (let i = Math.max(left, index-distance+1); i <= Math.min(right, index+distance-1); i++) {
@@ -65,27 +65,28 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i+1;
         }
         else {
-            if (cells[i]?.querySelector("img")) continue;
+            if (cells[i]?.querySelector("img")) {
+                if (i != p2) blocked=true;
+                continue;
+            }
             if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
-    if (cnt >= 3) {
-        console.log("-",candidates(opponent>0? "opponent":""), p1, p2, p3);
-        // for (let idx of candidates) {
-        //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
-        //     else possibleMoves.set(idx, 10);
-        // }
+    if (cnt >= 3 && !blocked) {
+        console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p1, 10+(cnt-3)*1000 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p2, 10+(cnt-3)*1000 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
+            else possibleMoves.set(p3, 10+(cnt-3)*1000 + opponent*20);
         }
     }
     // check column
     let top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
+    p3 = undefined;
+    blocked = false;
     cnt = 0;
     for (let i = Math.max(top, index-(distance-1)*sizex); i <= Math.min(bottom, index+(distance-1)*sizex); i+=sizex) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
@@ -94,27 +95,28 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i+sizex;
         }
         else {
-            if (cells[i]?.querySelector("img")) continue;
+            if (cells[i]?.querySelector("img")) {
+                if (i != p2) blocked=true;
+                continue;
+            }
             if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
-    if (cnt >= 3) {
+    if (cnt >= 3 && !blocked) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
-        // for (let idx of candidates) {
-        //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
-        //     else possibleMoves.set(idx, 10);
-        // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p1, 10+(cnt-3)*1000 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p2, 10+(cnt-3)*1000 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
+            else possibleMoves.set(p3, 10+(cnt-3)*1000 + opponent*20);
         }
     }
     // check diagonal
     cnt = 0;
+    p3 = undefined;
+    blocked = false;
     let lentop = Math.floor(index/sizex), lenleft = index-left,
         lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
     let lentopleft = Math.min(lentop, lenleft),
@@ -132,27 +134,28 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i+1+sizex;
         }
         else {
-            if (cells[i]?.querySelector("img")) continue;
+            if (cells[i]?.querySelector("img")) {
+                if (i != p2) blocked=true;
+                continue;
+            }
             if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
-    if (cnt >= 3) {
+    if (cnt >= 3 && !blocked) {
         console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
-        // for (let idx of candidates) {
-        //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
-        //     else possibleMoves.set(idx, 10);
-        // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p1, 10+(cnt-3)*1000 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p2, 10+(cnt-3)*1000 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
+            else possibleMoves.set(p3, 10+(cnt-3)*1000 + opponent*20);
         }
     }
 
     cnt = 0;
+    p3 = undefined;
+    blocked = false;
     for (let i = Math.max(top_right, index+distance-sizex*distance); i <= Math.min(bottom_left, index-distance+sizex*distance); i+=sizex-1) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
@@ -160,23 +163,26 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i-1+sizex;
         }
         else {
-            if (cells[i]?.querySelector("img")) continue;
+            if (cells[i]?.querySelector("img")) {
+                if (i != p2) blocked=true;
+                continue;
+            }
             if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
-    if (cnt >= 3) {
+    if (cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
-        // for (let idx of candidates) {
+        // for (let idx of ) {
         //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
         //     else possibleMoves.set(idx, 10);
         // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p1, 10+(cnt-3)*1000 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
+        else possibleMoves.set(p2, 10+(cnt-3)*1000 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
+            else possibleMoves.set(p3, 10+(cnt-3)*1000 + opponent*20);
         }
     }
 }
@@ -228,7 +234,7 @@ async function botMove(firstime=false) {
     ///////////
     if (firstime) finalmove = centerindex;
     console.log("bot move", finalmove);
-    await sleep(500);
+    await sleep(1000);
     cells[finalmove].appendChild(img);
     showPlayerTurn.src = bot==="x"? "./img/O.png": "./img/X.png"
     isBotThinking = false;
@@ -260,6 +266,7 @@ board.addEventListener("click", async (e) => {
         const img = document.createElement("img");
         img.src = bot==="x"? "./img/O.png": "./img/X.png";
         e.target.appendChild(img);
+        console.log("player move", e.target.dataset.index);
         if (checkWin(e.target)) {
             setGameOver(true);
             turnHeader[0].innerHTML = "Bạn thắng";
