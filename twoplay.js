@@ -1,8 +1,9 @@
 import {isGameOver, setGameOver, turnHeader,
     board, showPlayerTurn, sizex, sizey,
-    cells, resetGame, menu,
+    cells, resetGame, menu, moveSound,
     switchPlayer,
-    checkPlayer, checkWin
+    checkPlayer, checkWin,
+    moveSound
 } from "./scripts.js";
 // const imgplayer = document.getElementsByClassName("imgplayer");
 // const turnHeader = document.getElementsByClassName("turnHeader");
@@ -23,6 +24,7 @@ board.addEventListener("click", (e) => {
             img.src = "./img/X.png";
             img.alt = "x";
             e.target.appendChild(img);
+            moveSound.play();
             if (checkWin(e.target)) {
                 // window.alert(turn + " wins");
                 turnHeader[0].innerHTML = "Người thắng:&nbsp";

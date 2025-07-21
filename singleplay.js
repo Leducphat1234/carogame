@@ -1,6 +1,6 @@
 import {isGameOver, setGameOver, turnHeader,
     board, showPlayerTurn, sizex, sizey,
-    cells, resetGame, menu,
+    cells, resetGame, menu, moveSound,
     switchPlayer, checkFullBoard,
     checkPlayer, checkWin,
     centerindex,
@@ -27,6 +27,7 @@ let bot = "o";
 const O_img = document.getElementById("O");
 const X_img = document.getElementById("X");
 let isBotThinking = false;
+moveSound.preload = "auto";
 function displayUnderscore(cur) {
     if (cur === "x") {
         chosen[0].style.display = "initial";
@@ -267,6 +268,7 @@ async function botMove(firstime=false) {
     console.log("bot move", finalmove);
     await sleep(100);
     cells[finalmove].appendChild(img);
+    moveSound.play();
     showPlayerTurn.src = bot==="x"? "./img/O.png": "./img/X.png"
     isBotThinking = false;
     return finalmove;
@@ -297,6 +299,7 @@ board.addEventListener("click", async (e) => {
         const img = document.createElement("img");
         img.src = bot==="x"? "./img/O.png": "./img/X.png";
         e.target.appendChild(img);
+        moveSound.play();
         console.log("player move", e.target.dataset.index);
         possibleMoves.set(e.target.dataset.index, 0);
         if (checkWin(e.target)) {

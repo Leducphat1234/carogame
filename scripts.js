@@ -10,6 +10,7 @@ export let centerindex = Math.floor(sizey / 2) * sizex + Math.floor(sizex / 2);
 let gameOver = false;
 export let turn = "x";
 export let isFullBoard = false;
+export const moveSound = new Audio("audio/move.mp3");
 
 
 export function resetGame() {
