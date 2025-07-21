@@ -58,6 +58,7 @@ function checkThreat(curcell, opponent=0) {
     let p1, p2, p3 = undefined;
     let blocked = false;
     let half_block = false;
+    let max_cnt = 0;
     // check row
     let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
     for (let i = Math.max(left, index-distance+1); i <= Math.min(right, index+distance-1); i++) {
@@ -67,27 +68,28 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i+1;
             if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
             if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
+            max_cnt = Math.max(max_cnt, cnt);
         }
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
-                cnt = 0;
+                max_cnt = Math.max(max_cnt, cnt); cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
-    if (cnt >= 3 && !blocked) {
+    if (max_cnt >= 3 && !blocked) {
         console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
         initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
+            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         }
     }
     // check column
@@ -96,6 +98,7 @@ function checkThreat(curcell, opponent=0) {
     blocked = false;
     half_block = false;
     cnt = 0;
+    max_cnt = 0;
     for (let i = Math.max(top, index-(distance-1)*sizex); i <= Math.min(bottom, index+(distance-1)*sizex); i+=sizex) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
@@ -103,27 +106,28 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i+sizex;
             if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
             if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
+            max_cnt = Math.max(max_cnt, cnt);
         }
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
-                cnt = 0;
+                max_cnt = Math.max(max_cnt, cnt); cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
-    if (cnt >= 3 && !blocked) {
+    if (max_cnt >= 3 && !blocked) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
+            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         }
     }
     // check diagonal
@@ -131,6 +135,7 @@ function checkThreat(curcell, opponent=0) {
     p3 = undefined;
     blocked = false;
     half_block = false;
+    max_cnt = 0;
     let lentop = Math.floor(index/sizex), lenleft = index-left,
         lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
     let lentopleft = Math.min(lentop, lenleft),
@@ -148,27 +153,28 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i+1+sizex;
             if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
             if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
+            max_cnt = Math.max(max_cnt, cnt);
         }
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
-                cnt = 0;
+                max_cnt = Math.max(max_cnt, cnt); cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
-    if (cnt >= 3 && !blocked) {
+    if (max_cnt >= 3 && !blocked) {
         console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
+            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         }
     }
 
@@ -176,6 +182,7 @@ function checkThreat(curcell, opponent=0) {
     p3 = undefined;
     blocked = false;
     half_block = false;
+    max_cnt = 0;
     for (let i = Math.max(top_right, index+distance-sizex*distance); i <= Math.min(bottom_left, index-distance+sizex*distance); i+=sizex-1) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
@@ -183,27 +190,28 @@ function checkThreat(curcell, opponent=0) {
             else if (cnt >= 3) p2=i-1+sizex;
             if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
             if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
+            max_cnt = Math.max(max_cnt, cnt);
         }
         else {
             if (cells[i]?.querySelector("img")) {
                 if (p2 && i != p2 && cnt < 4) blocked=true;
-                cnt = 0;
+                max_cnt = Math.max(max_cnt, cnt); cnt = 0;
                 if (i === p1 || i === p2) half_block=true;
                 continue;
             }
             if (cnt >= 1 && cnt <= 3 && p3==undefined && !blocked) p3=i;
         }
     }
-    if (cnt >= 3 && !blocked) {
+    if (max_cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 30+(cnt-3)*1000 - (half_block? 25: 0));
+        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 30+(cnt-3)*1000 - (half_block? 25: 0));
+            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
         }
     }
     return [p1, p2, p3];
