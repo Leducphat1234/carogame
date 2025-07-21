@@ -27,7 +27,6 @@ let bot = "o";
 const O_img = document.getElementById("O");
 const X_img = document.getElementById("X");
 let isBotThinking = false;
-let isExistLine = false;
 function displayUnderscore(cur) {
     if (cur === "x") {
         chosen[0].style.display = "initial";
@@ -66,6 +65,8 @@ function checkThreat(curcell, opponent=0) {
             cnt++;
             if (cnt===1) p1=i-1;
             else if (cnt >= 3) p2=i+1;
+            if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
+            if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
         }
         else {
             if (cells[i]?.querySelector("img")) {
@@ -78,7 +79,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
-        isExistLine = true;
+        initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -99,6 +100,8 @@ function checkThreat(curcell, opponent=0) {
             cnt++;
             if (cnt===1) p1=i-sizex;
             else if (cnt >= 3) p2=i+sizex;
+            if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
+            if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
         }
         else {
             if (cells[i]?.querySelector("img")) {
@@ -111,7 +114,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
-        isExistLine = true;
+        initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -141,6 +144,8 @@ function checkThreat(curcell, opponent=0) {
             cnt++;
             if (cnt===1) p1=i-1-sizex;
             else if (cnt >= 3) p2=i+1+sizex;
+            if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
+            if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
         }
         else {
             if (cells[i]?.querySelector("img")) {
@@ -153,7 +158,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
-        isExistLine = true;
+        initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -173,6 +178,8 @@ function checkThreat(curcell, opponent=0) {
             cnt++;
             if (cnt===1) p1=i+1-sizex;
             else if (cnt >= 3) p2=i-1+sizex;
+            if (p1 && (p1 < 0 || p1 > sizex*sizey-1)) p1=i;
+            if (p2 && (p2 < 0 || p2 > sizex*sizey-1)) p2=i;
         }
         else {
             if (cells[i]?.querySelector("img")) {
@@ -185,7 +192,7 @@ function checkThreat(curcell, opponent=0) {
     }
     if (cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
-        isExistLine = true;
+        initMp();
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, 30+(cnt-3)*1000 - (half_block? 25: 0));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -203,6 +210,7 @@ function randMove() {
     const r = Math.random() * totalWeight;
     let cumulative = 0;
     for (const [value, weight] of entries) {
+        if (cells[value]?.querySelector("img")) continue;
         cumulative += weight;
         if (r < cumulative) {
             possibleMoves.set(value, 0);
@@ -223,7 +231,7 @@ function genPossibleMoves(playercell) {
     ];
     // console.log("index", index);
     for (let d of deviation) {
-        let around = index + d[0]+d[1]*sizex
+        let around = index + d[0]+d[1]*sizex;
         // console.log(around);
         if (around < 0 || around > sizex*sizey) continue;
         if (cells[around].querySelector("img")) {
@@ -285,7 +293,7 @@ board.addEventListener("click", async (e) => {
             return;
         }
         if (checkFullBoard()) return;
-        if (!isExistLine) genPossibleMoves(e.target);
+        genPossibleMoves(e.target);
         checkThreat(e.target);
         checkThreat(cells[move]);
         move = await botMove();
