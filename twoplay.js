@@ -20,7 +20,7 @@ board.addEventListener("click", (e) => {
         if (e.target.querySelector("img")) return;
         const img = document.createElement("img");
         if (checkPlayer("x")) {
-            img.src = "/img/X.png";
+            img.src = "./img/X.png";
             img.alt = "x";
             e.target.appendChild(img);
             if (checkWin(e.target)) {
@@ -30,19 +30,19 @@ board.addEventListener("click", (e) => {
                 return;
             }
             switchPlayer();
-            showPlayerTurn.src = "/img/O.png";
+            showPlayerTurn.src = "./img/O.png";
         }
         else {
-            img.src = "/img/O.png";
+            img.src = "./img/O.png";
             img.alt = "o";
             e.target.appendChild(img);
             if (checkWin(e.target)) {
-                turnHeader[0].innerHTML = "Người thắng:&nbsp";
+                turnHeader[0].innerHTML = "Người thắng:";
                 setGameOver(true);
                 return;
             }
             switchPlayer();
-            showPlayerTurn.src = "/img/X.png";
+            showPlayerTurn.src = "./img/X.png";
         }
         
     }
