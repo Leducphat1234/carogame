@@ -54,7 +54,7 @@ function checkThreat(curcell, opponent=0) {
     const index = parseInt(curcell.dataset.index);
     let cnt = 0;
     const distance = 5;
-    let candidates = [];
+    le
     let p1, p2, p3 = undefined;
     // check row
     let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
@@ -70,7 +70,7 @@ function checkThreat(curcell, opponent=0) {
         }
     }
     if (cnt >= 3) {
-        console.log("-",candidates, p1, p2, p3);
+        console.log("-",candidates(opponent>0? "opponent":"") p1, p2, p3);
         // for (let idx of candidates) {
         //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
         //     else possibleMoves.set(idx, 10);
@@ -87,7 +87,6 @@ function checkThreat(curcell, opponent=0) {
     // check column
     let top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
     cnt = 0;
-    candidates = [];
     for (let i = Math.max(top, index-(distance-1)*sizex); i <= Math.min(bottom, index+(distance-1)*sizex); i+=sizex) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
@@ -100,7 +99,7 @@ function checkThreat(curcell, opponent=0) {
         }
     }
     if (cnt >= 3) {
-        console.log("|", candidates, p1, p2, p3);
+        console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
         // for (let idx of candidates) {
         //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
         //     else possibleMoves.set(idx, 10);
@@ -115,7 +114,6 @@ function checkThreat(curcell, opponent=0) {
         }
     }
     // check diagonal
-    candidates = [];
     cnt = 0;
     let lentop = Math.floor(index/sizex), lenleft = index-left,
         lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
@@ -139,7 +137,7 @@ function checkThreat(curcell, opponent=0) {
         }
     }
     if (cnt >= 3) {
-        console.log("\\", candidates, p1, p2, p3);
+        console.log("\\", (opponent>0? "opponent":"")s, p1, p2, p3);
         // for (let idx of candidates) {
         //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
         //     else possibleMoves.set(idx, 10);
@@ -154,7 +152,6 @@ function checkThreat(curcell, opponent=0) {
         }
     }
 
-    candidates = [];
     cnt = 0;
     for (let i = Math.max(top_right, index+distance-sizex*distance); i <= Math.min(bottom_left, index-distance+sizex*distance); i+=sizex-1) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
@@ -168,7 +165,7 @@ function checkThreat(curcell, opponent=0) {
         }
     }
     if (cnt >= 3) {
-        console.log("/", candidates, p1, p2, p3);
+        console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
         // for (let idx of candidates) {
         //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
         //     else possibleMoves.set(idx, 10);
