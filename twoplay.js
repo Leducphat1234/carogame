@@ -1,6 +1,6 @@
 import {isGameOver, setGameOver, turnHeader,
     board, showPlayerTurn, sizex, sizey,
-    cells, resetGame, menu, moveSound,
+    cells, resetGame, menu,
     switchPlayer,
     checkPlayer, checkWin,
     moveSound
@@ -15,16 +15,17 @@ import {isGameOver, setGameOver, turnHeader,
 // let cells = document.querySelectorAll('.cell');
 window.resetGame = resetGame;
 resetGame();
+moveSound.preload = "auto";
 board.addEventListener("click", (e) => {
     if (isGameOver()) return;
     if (e.target.classList.contains("cell")) {
         if (e.target.querySelector("img")) return;
         const img = document.createElement("img");
+        moveSound.play();
         if (checkPlayer("x")) {
             img.src = "./img/X.png";
             img.alt = "x";
             e.target.appendChild(img);
-            moveSound.play();
             if (checkWin(e.target)) {
                 // window.alert(turn + " wins");
                 turnHeader[0].innerHTML = "Người thắng:&nbsp";

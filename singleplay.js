@@ -266,7 +266,7 @@ async function botMove(firstime=false) {
 
     if (firstime) finalmove = centerindex;
     console.log("bot move", finalmove);
-    await sleep(100);
+    await sleep(1000);
     cells[finalmove].appendChild(img);
     showPlayerTurn.src = bot==="x"? "./img/O.png": "./img/X.png"
     isBotThinking = false;
