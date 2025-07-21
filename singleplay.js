@@ -47,7 +47,7 @@ function initMp() {
     }
 }
 initMp();
-function checkThreat(curcell) {
+function checkThreat(curcell, opponent=0) {
     if (!curcell) return;
     const curimg = curcell.querySelector("img");
     if (!curimg) return;
@@ -55,7 +55,7 @@ function checkThreat(curcell) {
     let cnt = 0;
     const distance = 5;
     let candidates = [];
-    let p1, p2, p3;
+    let p1, p2, p3 = undefined;
     // check row
     let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
     for (let i = Math.max(left, index-distance+1); i <= Math.min(right, index+distance-1); i++) {
@@ -66,7 +66,7 @@ function checkThreat(curcell) {
         }
         else {
             if (cells[i]?.querySelector("img")) continue;
-            if (cnt > 1 && cnt <= 3 && !p3) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
     if (cnt >= 3) {
@@ -76,12 +76,12 @@ function checkThreat(curcell) {
         //     else possibleMoves.set(idx, 10);
         // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-2)*10);
+        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-2)*10);
+        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 100);
+            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
         }
     }
     // check column
@@ -96,7 +96,7 @@ function checkThreat(curcell) {
         }
         else {
             if (cells[i]?.querySelector("img")) continue;
-            if (cnt > 1 && cnt <= 3 && !p3) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
     if (cnt >= 3) {
@@ -106,12 +106,12 @@ function checkThreat(curcell) {
         //     else possibleMoves.set(idx, 10);
         // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-2)*10);
+        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-2)*10);
+        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 100);
+            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
         }
     }
     // check diagonal
@@ -135,7 +135,7 @@ function checkThreat(curcell) {
         }
         else {
             if (cells[i]?.querySelector("img")) continue;
-            if (cnt > 1 && cnt <= 3 && !p3) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
     if (cnt >= 3) {
@@ -145,12 +145,12 @@ function checkThreat(curcell) {
         //     else possibleMoves.set(idx, 10);
         // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-2)*10);
+        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-2)*10);
+        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 100);
+            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
         }
     }
 
@@ -164,7 +164,7 @@ function checkThreat(curcell) {
         }
         else {
             if (cells[i]?.querySelector("img")) continue;
-            if (cnt > 1 && cnt <= 3 && !p3) p3=i;
+            if (cnt > 1 && cnt <= 3 && p3===undefined) p3=i;
         }
     }
     if (cnt >= 3) {
@@ -174,12 +174,12 @@ function checkThreat(curcell) {
         //     else possibleMoves.set(idx, 10);
         // }
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, 10+(cnt-2)*10);
+        else possibleMoves.set(p1, 10+(cnt-3)*10 + opponent*20);
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, 10+(cnt-2)*10);
+        else possibleMoves.set(p2, 10+(cnt-3)*10 + opponent*20);
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, 100);
+            else possibleMoves.set(p3, 10+(cnt-3)*10 + opponent*20);
         }
     }
 }
@@ -191,7 +191,7 @@ function randMove(moves) {
     for (const [value, weight] of entries) {
         cumulative += weight;
         if (r < cumulative) {
-            possibleMoves.set(value, 0);
+            moves.set(value, 0);
             return value;
         }
     }
@@ -270,7 +270,7 @@ board.addEventListener("click", async (e) => {
         }
         if (checkFullBoard()) return;
         genPossibleMoves(e.target);
-        checkThreat(e.target);
+        checkThreat(e.target, 1000);
         checkThreat(cells[move]);
         move = await botMove();
         if (checkWin(cells[move])) {
