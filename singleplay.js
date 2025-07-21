@@ -70,7 +70,7 @@ function checkThreat(curcell, opponent=0) {
         }
     }
     if (cnt >= 3) {
-        console.log("-",candidates(opponent>0? "opponent":"") p1, p2, p3);
+        console.log("-",candidates(opponent>0? "opponent":""), p1, p2, p3);
         // for (let idx of candidates) {
         //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
         //     else possibleMoves.set(idx, 10);
@@ -137,7 +137,7 @@ function checkThreat(curcell, opponent=0) {
         }
     }
     if (cnt >= 3) {
-        console.log("\\", (opponent>0? "opponent":"")s, p1, p2, p3);
+        console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
         // for (let idx of candidates) {
         //     if (cells[idx]?.querySelector("img")) possibleMoves.set(idx, 0);
         //     else possibleMoves.set(idx, 10);
