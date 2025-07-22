@@ -19,7 +19,7 @@ export function resetGame() {
     isFullBoard = false;
     cntmove = 0;
     turn = "x";
-    showPlayerTurn.src = "img/X.png";
+    showPlayerTurn.src = "./img/X.png";
     board.style.gridTemplateColumns = `repeat(${sizex}, 40px)`;
     board.style.gridTemplateRows = `repeat(${sizey}, 40px)`;
     for (let i = 0; i < sizex*sizey; i++) {

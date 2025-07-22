@@ -49,17 +49,19 @@ function initMp() {
     }
 }
 initMp();
+let move = -1, subPoss = [], subPossSelf = [];
 function checkThreat(curcell, opponent=0) {
-    if (!curcell) return;
+    if (!curcell) return [undefined, undefined, undefined, 0];
     const curimg = curcell.querySelector("img");
-    if (!curimg) return;
+    if (!curimg) return [undefined, undefined, undefined, 0];
     const index = parseInt(curcell.dataset.index);
     let cnt = 0;
     const distance = 4;
-    let p1, p2, p3 = undefined;
+    let p1, p2, p3, p1f, p2f, p3f;
     let blocked = false;
     let half_block = false;
     let max_cnt = 0;
+    let possibility = 0;
     // check row
     let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
     for (let i = Math.max(left, index-distance+1); i <= Math.min(right, index+distance-1); i++) {
@@ -86,13 +88,15 @@ function checkThreat(curcell, opponent=0) {
     if (max_cnt >= 3 && !blocked) {
         console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
         initMp();
+        p1f = p1; p2f = p2; p3f = p3;
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p2, Math.max(0, possibility));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+            else possibleMoves.set(p3, Math.max(0, possibility));
         }
     }
     // check column
@@ -127,13 +131,15 @@ function checkThreat(curcell, opponent=0) {
     if (max_cnt >= 3 && !blocked) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
+        p1f = p1; p2f = p2; p3f = p3;
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p2, Math.max(0, possibility));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+            else possibleMoves.set(p3, Math.max(0, possibility));
         }
     }
     // check diagonal
@@ -175,14 +181,17 @@ function checkThreat(curcell, opponent=0) {
     if (cells[p1]?.querySelector("img").src !== curimg.src && cells[p2]?.querySelector("img").src !== curimg.src) blocked = true;
     if (max_cnt >= 3 && !blocked) {
         console.log("\\", (opponent>0? "opponent":""), p1, p2, p3);
+        p1f = p1; p2f = p2; p3f = p3;
         initMp();
+        p1f = p1; p2f = p2; p3f = p3;
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p2, Math.max(0, possibility));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+            else possibleMoves.set(p3, Math.max(0, possibility));
         }
     }
 
@@ -214,17 +223,20 @@ function checkThreat(curcell, opponent=0) {
     if (cells[p1]?.querySelector("img").src !== curimg.src && cells[p2]?.querySelector("img").src !== curimg.src) blocked = true;
     if (max_cnt >= 3 && !blocked) {
         console.log("/", (opponent>0? "opponent":""), p1, p2, p3);
+        p1f = p1; p2f = p2; p3f = p3;
         initMp();
+        p1f = p1; p2f = p2; p3f = p3;
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
-        else possibleMoves.set(p1, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
-        else possibleMoves.set(p2, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+        else possibleMoves.set(p2, Math.max(0, possibility));
         if (p3) {
             if (cells[p3]?.querySelector("img")) possibleMoves.set(p3, 0);
-            else possibleMoves.set(p3, Math.max(0, 30+(max_cnt-3)*1000 - (half_block? 25: 0)));
+            else possibleMoves.set(p3, Math.max(0, possibility));
         }
     }
-    return [p1, p2, p3];
+    return [p1f, p2f, p3f, possibility];
 }
 function randMove() {
     const entries = Array.from(possibleMoves.entries());
@@ -232,10 +244,14 @@ function randMove() {
     const r = Math.random() * totalWeight;
     let cumulative = 0;
     for (const [value, weight] of entries) {
-        if (cells[value]?.querySelector("img")) continue;
+        if (weight === 0) continue;
         cumulative += weight;
-        if (r < cumulative) {
-            possibleMoves.set(value, 0);
+        if (cells[value]?.querySelector("img")) {
+            possibleMoves.set(parseInt(value), 0);
+        }
+        else if (r < cumulative) {
+            console.log("random",value,weight);
+            possibleMoves.set(parseInt(value), 0);
             return value;
         }
     }
@@ -271,7 +287,8 @@ async function botMove(firstime=false) {
     img.src = bot==="x"? "./img/X.png": "./img/O.png";
     let finalmove;
 
-    finalmove = randMove();
+    do finalmove = randMove();
+    while (!finalmove);
     if (firstime) finalmove = centerindex;
     console.log("bot move", finalmove);
     await sleep(1000);
@@ -298,7 +315,6 @@ document.getElementsByClassName("replay")[0].addEventListener("click", () => {
     initMp();
     if (bot==="x") botMove(true);
 });
-let move = -1;
 board.addEventListener("click", async (e) => {
     if (isGameOver()) return;
     if (isBotThinking) return;
@@ -308,8 +324,9 @@ board.addEventListener("click", async (e) => {
         img.src = bot==="x"? "./img/O.png": "./img/X.png";
         e.target.appendChild(img);
         moveSound.play();
-        console.log("player move", e.target.dataset.index);
-        possibleMoves.set(e.target.dataset.index, 0);
+        console.log(cntmove,"-----------")
+        console.log("player move", parseInt(e.target.dataset.index));
+        possibleMoves.set(parseInt(e.target.dataset.index), 0);
         if (checkWin(e.target)) {
             setGameOver(true);
             turnHeader[0].innerHTML = "Bạn thắng";
@@ -317,9 +334,33 @@ board.addEventListener("click", async (e) => {
         }
         if (checkFullBoard()) return;
         genPossibleMoves(e.target);
-        checkThreat(e.target);
-        checkThreat(cells[move]);
+        subPoss.push(checkThreat(e.target));
+        subPossSelf.push(checkThreat(cells[move]));
+        for (let p of subPoss) {
+            for (let i = 0; i < p.length-1; i++) {
+                if (p[i]) {
+                    possibleMoves.set(p[i], Math.max(p[p.length-1], possibleMoves.get(p[i])));
+                    console.log("threat1", i,p[i], possibleMoves.get(p[i]));
+                }
+                else p.splice(i, 1);
+            }
+        }
+        for (let p of subPossSelf) {
+            for (let i = 0; i < p.length-1; i++) {
+                if (p[i]) {
+                    possibleMoves.set(p[i], Math.max(p[p.length-1], possibleMoves.get(p[i])));
+                    console.log("threat2", i,p[i], possibleMoves.get(p[i]));
+                }
+                else p.splice(i, 1);
+            }
+        }
         move = await botMove();
+        for (let i = 0; i < subPoss.length; i++) {
+            if (subPoss[i].length < 1) subPoss.splice(i, 1);
+        }
+        for (let i = 0; i < subPossSelf.length; i++) {
+            if (subPossSelf[i].length < 1) subPossSelf.splice(i, 1);
+        }
         if (checkWin(cells[move])) {
             setGameOver(true);
             turnHeader[0].innerHTML = "Bạn Thua";
