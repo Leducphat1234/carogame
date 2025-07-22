@@ -47,6 +47,8 @@ function initMp() {
     for (let i = 0; i < sizex*sizey; i++) {
         possibleMoves.set(i, 0);
     }
+    subPoss = [];
+    subPossSelf = [];
 }
 initMp();
 let move = -1, subPoss = [], subPossSelf = [];
