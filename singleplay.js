@@ -357,11 +357,14 @@ board.addEventListener("click", async (e) => {
             }
         }
         move = await botMove();
-        for (let i = 0; i < subPoss.length; i++) {
+        let i = 0;
+        while (i < subPoss.length) {
             if (subPoss[i].length < 1) subPoss.splice(i, 1);
+            else i++;
         }
-        for (let i = 0; i < subPossSelf.length; i++) {
+        while (i < subPossSelf.length) {
             if (subPossSelf[i].length < 1) subPossSelf.splice(i, 1);
+            else i++;
         }
         if (checkWin(cells[move])) {
             setGameOver(true);
