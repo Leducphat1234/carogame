@@ -48,8 +48,6 @@ function initMp() {
     for (let i = 0; i < sizex*sizey; i++) {
         possibleMoves.set(i, 0);
     }
-    subPoss = [];
-    subPossSelf = [];
 }
 initMp();
 function checkThreat(curcell, opponent=0) {
@@ -304,17 +302,23 @@ X_img.addEventListener("click", () => {
     bot = "o";
     resetGame();
     initMp();
+    subPoss = [];
+    subPossSelf = [];
     displayUnderscore("x");
 });
 O_img.addEventListener("click", () => {
     bot = "x";
     resetGame();
     initMp();
+    subPoss = [];
+    subPossSelf = [];
     displayUnderscore("o");
     botMove(true);
 });
 document.getElementsByClassName("replay")[0].addEventListener("click", () => {
     initMp();
+    subPoss = [];
+    subPossSelf = [];
     if (bot==="x") botMove(true);
 });
 board.addEventListener("click", async (e) => {
