@@ -89,7 +89,7 @@ function checkThreat(curcell, opponent=0) {
         console.log("-",(opponent>0? "opponent":""), p1, p2, p3);
         initMp();
         p1f = p1; p2f = p2; p3f = p3;
-        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 500: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -132,7 +132,7 @@ function checkThreat(curcell, opponent=0) {
         console.log("|", (opponent>0? "opponent":""), p1, p2, p3);
         initMp();
         p1f = p1; p2f = p2; p3f = p3;
-        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 500: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -184,7 +184,7 @@ function checkThreat(curcell, opponent=0) {
         p1f = p1; p2f = p2; p3f = p3;
         initMp();
         p1f = p1; p2f = p2; p3f = p3;
-        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 500: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
@@ -226,7 +226,7 @@ function checkThreat(curcell, opponent=0) {
         p1f = p1; p2f = p2; p3f = p3;
         initMp();
         p1f = p1; p2f = p2; p3f = p3;
-        possibility = 30+(max_cnt-3)*1000 - (half_block? 25: 0);
+        possibility = 30+(max_cnt-3)*1000 - (half_block? 500: 0);
         if (cells[p1]?.querySelector("img")) possibleMoves.set(p1, 0);
         else possibleMoves.set(p1, Math.max(0, possibility));
         if (cells[p2]?.querySelector("img")) possibleMoves.set(p2, 0);
