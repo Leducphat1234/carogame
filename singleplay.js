@@ -42,6 +42,7 @@ function displayUnderscore(cur) {
 }
 displayUnderscore("x");
 const possibleMoves = new Map();
+let move = -1, subPoss = [], subPossSelf = [];
 window.possibleMoves = possibleMoves;
 function initMp() {
     for (let i = 0; i < sizex*sizey; i++) {
@@ -51,7 +52,6 @@ function initMp() {
     subPossSelf = [];
 }
 initMp();
-let move = -1, subPoss = [], subPossSelf = [];
 function checkThreat(curcell, opponent=0) {
     if (!curcell) return [undefined, undefined, undefined, 0];
     const curimg = curcell.querySelector("img");
