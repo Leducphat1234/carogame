@@ -346,7 +346,7 @@ board.addEventListener("click", async (e) => {
             for (let i = 0; i < p.length-1; i++) {
                 if (p[i]) {
                     possibleMoves.set(p[i], Math.max(p[p.length-1], possibleMoves.get(p[i])));
-                    console.log("threat1", i,p[i], possibleMoves.get(p[i]));
+                    console.log("threat", i,p[i], possibleMoves.get(p[i]));
                 }
                 else p.splice(i, 1);
             }
@@ -355,7 +355,7 @@ board.addEventListener("click", async (e) => {
             for (let i = 0; i < p.length-1; i++) {
                 if (p[i]) {
                     possibleMoves.set(p[i], Math.max(p[p.length-1], possibleMoves.get(p[i])));
-                    console.log("threat2", i,p[i], possibleMoves.get(p[i]));
+                    console.log("oppoturnity", i,p[i], possibleMoves.get(p[i]));
                 }
                 else p.splice(i, 1);
             }
