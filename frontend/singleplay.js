@@ -282,7 +282,7 @@ function genPossibleMoves(playercell) {
 }
 async function botMove(firstime=false) {
     isBotThinking = true;
-    showPlayerTurn.src = bot==="x"? "img/X.png": "img/O.png";
+    showPlayerTurn.src = bot==="x"? "./img/X.png": "./img/O.png";
     const img = document.createElement("img");
     img.src = bot==="x"? "./img/X.png": "./img/O.png";
     let finalmove;
