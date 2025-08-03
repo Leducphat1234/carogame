@@ -62,14 +62,23 @@ export function checkWin(curcell) {
         setGameOver(true);
         return false;
     }
-    // let x_axis = parseInt(curcell.dataset.index % sizex);
-    // let y_axis = parseInt(curcell.dataset.index / sizex);
     const curimg = curcell.querySelector("img");
     const index = parseInt(curcell.dataset.index);
     let cnt = 0, max_cnt = 0;
+    const left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
+    const top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
+    const lentop = Math.floor(index/sizex), lenleft = index-left,
+        lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
+    const lentopleft = Math.min(lentop, lenleft),
+        lentopright = Math.min(lentop, lenright),
+        lenbottomleft = Math.min(lenbottom, lenleft),
+        lenbottomright = Math.min(lenbottom, lenright);
+    const top_left = index - lentopleft - sizex*lentopleft,
+        top_right = index + lentopright - sizex*lentopright,
+        bottom_left = index - lenbottomleft + sizex*lenbottomleft,
+        bottom_right = index + lenbottomright + sizex*lenbottomright;
     // check row
     let candidates = [];
-    let left = Math.floor(index/sizex)*sizex, right = Math.floor(index/sizex+1)*sizex-1;
     for (let i = Math.max(left, index-winning_dis+1); i <= Math.min(right, index+winning_dis-1); i++) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
@@ -86,7 +95,6 @@ export function checkWin(curcell) {
     }
     // check column
     candidates = [];
-    let top = index - left, bottom = index + sizex*(sizey - 1 - left/sizex);
     max_cnt = 0; cnt = 0;
     for (let i = Math.max(top, index-(winning_dis-1)*sizex); i <= Math.min(bottom, index+(winning_dis-1)*sizex); i+=sizex) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
@@ -102,18 +110,8 @@ export function checkWin(curcell) {
         mark(candidates);
         return true;
     }
-    // check diagonal
+    // check diagonal \
     candidates = [];
-    let lentop = Math.floor(index/sizex), lenleft = index-left,
-        lenbottom = sizey-Math.floor(index/sizex), lenright = sizex-(index-left);
-    let lentopleft = Math.min(lentop, lenleft),
-        lentopright = Math.min(lentop, lenright),
-        lenbottomleft = Math.min(lenbottom, lenleft),
-        lenbottomright = Math.min(lenbottom, lenright);
-    let top_left = index - lentopleft - sizex*lentopleft,
-        top_right = index + lentopright - sizex*lentopright,
-        bottom_left = index - lenbottomleft + sizex*lenbottomleft,
-        bottom_right = index + lenbottomright + sizex*lenbottomright;
     for (let i = Math.max(top_left, index-winning_dis-sizex*winning_dis); i <= Math.min(bottom_right, index+winning_dis+sizex*winning_dis); i+=sizex+1) {
         if (cells[i]?.querySelector("img") && cells[i].querySelector("img").src === curimg.src) {
             cnt++;
@@ -128,6 +126,7 @@ export function checkWin(curcell) {
         mark(candidates);
         return true;
     }
+    // check diagonal /
     candidates = [];
     for (let i = Math.max(top_right, index+winning_dis-sizex*winning_dis); i <= Math.min(bottom_left, index-winning_dis+sizex*winning_dis); i+=sizex-1) {
         // console.log(i, cells[i].querySelector("img"), curimg, bottom_left);
