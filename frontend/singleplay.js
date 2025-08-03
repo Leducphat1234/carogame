@@ -247,9 +247,12 @@ async function botMove(firstime=false) {
     img.src = bot==="x"? "./img/X.png": "./img/O.png";
     let finalmove;
 
-    do finalmove = randMove();
-    while (!finalmove);
     if (firstime) finalmove = centerindex;
+    else {
+        do {
+            finalmove = randMove();
+        } while (!finalmove);
+    }
     console.log("bot move", finalmove);
     possibleMoves.set(finalmove, 0);
     await sleep(1000);
