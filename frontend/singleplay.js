@@ -265,7 +265,7 @@ async function botMove(firstime=false) {
     }
     console.log("bot move", finalmove);
     possibleMoves.set(finalmove, 0);
-    await sleep(1000, controller.signal);
+    await sleep(500, controller.signal);
     moveSound.play();
     cells[finalmove].appendChild(img);
     showPlayerTurn.src = bot==="x"? "./img/O.png": "./img/X.png"
