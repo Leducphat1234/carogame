@@ -3,18 +3,12 @@ import {isGameOver, setGameOver, turnHeader,
     cells, resetGame, menu,
     switchPlayer,
     checkPlayer, checkWin,
-    moveSound
+    moveSound, scroll, centerindex
 } from "./scripts.js";
-// const imgplayer = document.getElementsByClassName("imgplayer");
-// const turnHeader = document.getElementsByClassName("turnHeader");
-// let turn = "x";
-// const board = document.getElementById("board");
-// const showPlayerTurn = document.getElementById("playerturn");
-// let winning = 5;
-// let sizex = 35, sizey = 35;
-// let cells = document.querySelectorAll('.cell');
+
 window.resetGame = resetGame;
 resetGame();
+window.onload = scroll(document.getElementById("center-cell"));
 moveSound.preload = "auto";
 board.addEventListener("click", (e) => {
     if (isGameOver()) return;
