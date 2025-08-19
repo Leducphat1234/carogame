@@ -146,9 +146,9 @@ export function checkWin(curcell) {
     return false;
 }
 
-export function centerScroll(centerCell) {
-      if (centerCell) {
-        centerCell.scrollIntoView({
+export function scroll(cCell) {
+      if (cell) {
+        cell.scrollIntoView({
           behavior: 'instant',
           block: 'center',
           inline: 'center'
