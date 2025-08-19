@@ -220,8 +220,16 @@ function randMove() {
     }
     return null;
 }
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function sleep(ms, signal) {
+    return new Promise((resolve, reject) => {
+        const setTimeoutId = setTimeout(resolve, ms);
+        if (signal) {
+            signal.addEventListener("abort", () => {
+                clearTimeout(setTimeoutId);
+                reject();
+            });
+        }
+    });
 }
 function genPossibleMoves(playercell) {
     const index = parseInt(playercell.dataset.index);
@@ -243,6 +251,7 @@ function genPossibleMoves(playercell) {
         }
     }
 }
+const controller = new AbortController();
 async function botMove(firstime=false) {
     isBotThinking = true;
     showPlayerTurn.src = bot==="x"? "./img/X.png": "./img/O.png";
@@ -258,7 +267,7 @@ async function botMove(firstime=false) {
     }
     console.log("bot move", finalmove);
     possibleMoves.set(finalmove, 0);
-    await sleep(1000);
+    await sleep(1000, controller.signal);
     moveSound.play();
     cells[finalmove].appendChild(img);
     showPlayerTurn.src = bot==="x"? "./img/O.png": "./img/X.png"
@@ -267,26 +276,32 @@ async function botMove(firstime=false) {
 }
 X_img.addEventListener("click", () => {
     bot = "o";
-    resetGame();
-    initMp();
-    subPoss = [];
-    subPossSelf = [];
+    location.reload();
+    // resetGame();
+    // initMp();
+    // subPoss = [];
+    // subPossSelf = [];
+    // controller.abort();
     displayUnderscore("x");
 });
 O_img.addEventListener("click", () => {
     bot = "x";
-    resetGame();
-    initMp();
-    subPoss = [];
-    subPossSelf = [];
+    location.reload();
+    // resetGame();
+    // initMp();
+    // subPoss = [];
+    // subPossSelf = [];
+    // controller.abort();
     displayUnderscore("o");
     botMove(true);
 });
-document.getElementsByClassName("replay")[0].addEventListener("click", () => {
-    resetGame();
-    initMp();
-    subPoss = [];
-    subPossSelf = [];
+document.querySelector(".replay").addEventListener("click", () => {
+    location.reload();
+    // resetGame();
+    // initMp();
+    // subPoss = [];
+    // subPossSelf = [];
+    // controller.abort()
     if (bot==="x") botMove(true);
 });
 board.addEventListener("click", async (e) => {
