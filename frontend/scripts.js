@@ -147,7 +147,7 @@ export function checkWin(curcell) {
     return false;
 }
 
-export function scroll(cCell) {
+export function scroll(cell) {
       if (cell) {
         cell.scrollIntoView({
           behavior: 'instant',
