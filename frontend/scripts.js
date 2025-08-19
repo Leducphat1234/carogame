@@ -6,7 +6,7 @@ export let winning_dis = 5;
 export let sizex = 35, sizey = 25;
 export let cells = document.querySelectorAll('.cell');
 export let cntmove = 0;
-let centerindex = Math.floor(sizey / 2) * sizex + Math.floor(sizex / 2);
+export let centerindex = Math.floor(sizey / 2) * sizex + Math.floor(sizex / 2);
 let gameOver = false;
 export let turn = "x";
 export let isFullBoard = false;
