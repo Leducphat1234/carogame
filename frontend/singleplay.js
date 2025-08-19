@@ -291,7 +291,7 @@ O_img.addEventListener("click", () => {
     displayUnderscore("o");
     botMove(true);
 });
-document.getElementsByClassName("replay").addEventListener("click", () => {
+document.querySelector(".replay").addEventListener("click", () => {
     resetGame();
     initMp();
     subPoss = [];
