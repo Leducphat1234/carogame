@@ -6,7 +6,7 @@ export let winning_dis = 5;
 export let sizex = 35, sizey = 25;
 export let cells = document.querySelectorAll('.cell');
 export let cntmove = 0;
-export let centerindex = Math.floor(sizey / 2) * sizex + Math.floor(sizex / 2);
+let centerindex = Math.floor(sizey / 2) * sizex + Math.floor(sizex / 2);
 let gameOver = false;
 export let turn = "x";
 export let isFullBoard = false;
@@ -26,6 +26,7 @@ export function resetGame() {
         const cell = document.createElement("div");
         cell.classList.add("cell");
         cell.dataset.index = i;
+        if (i === centerindex) cell.id = "center-cell";
         board.appendChild(cell);
     }
     turnHeader[0].innerHTML = "Đến lượt:";
