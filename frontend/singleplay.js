@@ -274,7 +274,6 @@ async function botMove(firstime=false) {
 }
 X_img.addEventListener("click", () => {
     bot = "o";
-    location.reload();
     resetGame();
     initMp();
     subPoss = [];
@@ -284,7 +283,6 @@ X_img.addEventListener("click", () => {
 });
 O_img.addEventListener("click", () => {
     bot = "x";
-    location.reload();
     resetGame();
     initMp();
     subPoss = [];
@@ -293,7 +291,7 @@ O_img.addEventListener("click", () => {
     displayUnderscore("o");
     botMove(true);
 });
-document.querySelector(".replay").addEventListener("click", () => {
+document.getElementsByClassName("replay").addEventListener("click", () => {
     resetGame();
     initMp();
     subPoss = [];
