@@ -11,9 +11,7 @@ import {isGameOver, setGameOver, turnHeader,
 
 window.resetGame = resetGame;
 resetGame();
-window.onload = () => {
-    scroll(document.getElementById("center-cell"));
-};
+window.onload = scroll(document.getElementById("center-cell"));
 const chosen = document.getElementsByClassName("chosen");
 // const choice = document.getElementsByClassName("choice");
 let bot = "o";
@@ -296,12 +294,10 @@ O_img.addEventListener("click", () => {
     botMove(true);
 });
 document.querySelector(".replay").addEventListener("click", () => {
-    location.reload();
-    // resetGame();
-    // initMp();
-    // subPoss = [];
-    // subPossSelf = [];
-    // controller.abort()
+    resetGame();
+    initMp();
+    subPoss = [];
+    subPossSelf = [];
     if (bot==="x") botMove(true);
 });
 board.addEventListener("click", async (e) => {

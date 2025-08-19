@@ -8,9 +8,7 @@ import {isGameOver, setGameOver, turnHeader,
 
 window.resetGame = resetGame;
 resetGame();
-window.onload = () => {
-    scroll(document.getElementById("center-cell"));
-};
+window.onload = scroll(document.getElementById("center-cell"));
 moveSound.preload = "auto";
 board.addEventListener("click", (e) => {
     if (isGameOver()) return;
