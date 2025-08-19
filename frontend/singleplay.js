@@ -275,21 +275,21 @@ async function botMove(firstime=false) {
 X_img.addEventListener("click", () => {
     bot = "o";
     location.reload();
-    // resetGame();
-    // initMp();
-    // subPoss = [];
-    // subPossSelf = [];
-    // controller.abort();
+    resetGame();
+    initMp();
+    subPoss = [];
+    subPossSelf = [];
+    controller.abort();
     displayUnderscore("x");
 });
 O_img.addEventListener("click", () => {
     bot = "x";
     location.reload();
-    // resetGame();
-    // initMp();
-    // subPoss = [];
-    // subPossSelf = [];
-    // controller.abort();
+    resetGame();
+    initMp();
+    subPoss = [];
+    subPossSelf = [];
+    controller.abort();
     displayUnderscore("o");
     botMove(true);
 });
