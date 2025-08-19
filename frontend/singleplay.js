@@ -11,7 +11,9 @@ import {isGameOver, setGameOver, turnHeader,
 
 window.resetGame = resetGame;
 resetGame();
-window.onload = scroll(document.getElementById("center-cell"));
+window.onload = () => {
+    scroll(document.getElementById("center-cell"));
+};
 const chosen = document.getElementsByClassName("chosen");
 // const choice = document.getElementsByClassName("choice");
 let bot = "o";
@@ -281,6 +283,7 @@ O_img.addEventListener("click", () => {
     botMove(true);
 });
 document.getElementsByClassName("replay")[0].addEventListener("click", () => {
+    resetGame();
     initMp();
     subPoss = [];
     subPossSelf = [];

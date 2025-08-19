@@ -68,6 +68,7 @@ b {
     background-color: rgb(243, 237, 221);
     border: 2px solid;
     z-index: 1000;
+    overflow: scroll;
 }
 img.logo {
     width: 10vh;
@@ -125,6 +126,7 @@ img.logo {
 .choice {
     border: 2px outset;
     position: relative;
+    min-width: 40px;
 }
 .choice:hover {
     border: 2px inset;
