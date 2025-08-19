@@ -6,11 +6,12 @@ import {isGameOver, setGameOver, turnHeader,
     centerindex,
     cntmove,
     isFullBoard,
-    turn
+    turn, scroll
 } from "./scripts.js";
 
 window.resetGame = resetGame;
 resetGame();
+window.onload = scroll(document.getElementById("center-cell"));
 const chosen = document.getElementsByClassName("chosen");
 // const choice = document.getElementsByClassName("choice");
 let bot = "o";
