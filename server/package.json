@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server for online caro game",
+  "main": "app.js",
+  "author": "Phat",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
