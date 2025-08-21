@@ -67,7 +67,7 @@ b {
     height: 11vh;
     background-color: rgb(243, 237, 221);
     border: 2px solid;
-    z-index: 1000;
+    z-index: 999;
 }
 img.logo {
     width: 10vh;
@@ -145,4 +145,20 @@ img.logo {
     position: absolute;
     width:100%;
     height:100%;
+}
+.wrap {
+    border: 5px outset;
+    border-radius: 10%;
+    background-color: rgb(255, 228, 196);
+    width: fit-content;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -10%);
+}
+.wrap:hover {
+    background-color: rgba(255, 228, 196, 0.6);
+    border: 5px inset;
+}
+.wrap:active {
+    background-color: rgba(240, 234, 226, 0.6);
 }
