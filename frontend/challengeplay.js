@@ -2,11 +2,12 @@ import {isGameOver, setGameOver, turnHeader,
     board, showPlayerTurn, sizex, sizey,
     cells, resetGame, menu,
     switchPlayer,
-    checkPlayer, checkWin
+    checkPlayer, checkWin, scroll
 } from "./scripts.js";
 
 window.resetGame = resetGame;
 resetGame();
+window.onload = () => {scroll(document.getElementById("center-cell"))};
 function createPopup() {
     const overlay = document.createElement("div");
     Object.assign(overlay.style, {
@@ -45,7 +46,7 @@ function createPopup() {
     inputID.name = "IDgame";
     inputID.placeholder = "Nhập ID";
     const msg1 = document.createElement("h2");
-    msg1.innerHTML = "Nhập ID bạn được bạn bè gửi:";
+    msg1.innerHTML = "Nhập ID bạn được gửi rồi nhấn Enter:";
     const msg2 = document.createElement("h2");
     msg2.innerHTML = "hoặc";
     const wrap_btn = document.createElement("div");
@@ -81,6 +82,7 @@ function createPopup() {
         }
     });
     wrap_btn.addEventListener("click", (e) => {
+        console.log("User creates ID");
         // create ID
     });
 }
