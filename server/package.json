@@ -5,6 +5,7 @@
   "main": "app.js",
   "author": "Phat",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "express": "^5.1.0"
   }
